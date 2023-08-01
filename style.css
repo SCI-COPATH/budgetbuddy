@@ -1,0 +1,7 @@
+#enterCompiny{
+    display: none;
+}
+.compinyStyle{
+    display: flex;
+    justify-content: space-between;
+}
