@@ -18,7 +18,7 @@
                 <button onclick="addCompiney()">+</button>
             </div>
             <form id="enterCompiny">
-                <input type="text" placeholder="Enter Name" id="compinyName">
+                <input type="text" placeholder="Enter Name" id="compinyName" autocomplete="off" required>
                 <input type="submit" value="OK">
             </form>
         </div>
@@ -38,12 +38,12 @@
             </div>
 
             <div id="entryDet">
-                <input type="number" placeholder="Amount" id="amount">
-                <input type="text" placeholder="Remark" id="remark">
+                <input type="number" placeholder="Amount" id="amount" autocomplete="off" required>
+                <input type="text" placeholder="Remark" id="remark" autocomplete="off" >
 
                 <!-- <input type="date" id="date"> -->
-                <div>
-                    <input onclick="submitEntry(1)" type="submit" value="You Give">
+                <div >
+                    <input onclick="submitEntry(1)"  type="submit" value="You Give">
                     <input onclick="submitEntry(-1)" type="submit" value="You Got">
                 </div>
 

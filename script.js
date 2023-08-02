@@ -2,6 +2,7 @@
 let compines=[]
 let current
 let mode=0
+let states=[0,0]
 window.onload = function() {
     // localStorage.clear()
     compines= JSON.parse(localStorage.getItem('allData'))!=null?JSON.parse(localStorage.getItem('allData')):compines;
@@ -58,9 +59,9 @@ function loadEntry(){
         document.getElementById('customer').innerHTML=`<button onclick="home()"><</button><h2>${current}</h2>`
 
         if(compines[index].total>=0){
-            document.getElementById('result').innerHTML=`<div>You will get</div> <p class="moneyGet">${compines[index].total}</p>`
+            document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
         }else{
-            document.getElementById('result').innerHTML=`<div>You will got</div> <p class="moneyGot">${-1*compines[index].total}</p>`
+            document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[index].total}</h2>`
         }
         let message
         document.getElementById('Entry').innerHTML=''
@@ -151,12 +152,14 @@ function removeEntry(){
     document.getElementById('entryDet').classList.add('hide')
 }
 function submitEntry(state){
-    
+    // state.preventDefault();
+   
     let index=compines.map(x=>x.name).indexOf(current)
     let remark=document.getElementById('remark').value
     let amount=parseInt(document.getElementById('amount').value)
     console.log(current)
     console.log(index)
+    console.log(amount)
     if(state<0)
         amount=amount*-1
     compines[index].entry.push({'remark':remark,'amount':amount})
@@ -176,9 +179,9 @@ function submitEntry(state){
     }
     document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
     if(compines[index].total>=0){
-        document.getElementById('result').innerHTML=`<div>You will get</div> <p class="moneyGet">${compines[index].total}</p>`
+        document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
     }else{
-        document.getElementById('result').innerHTML=`<div>You will got</div> <p class="moneyGot">${-1*compines[index].total}</p>`
+        document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[index].total}</h2>`
     }
     removeEntry()
     localStorage.setItem('allData', JSON.stringify(compines))
