@@ -1,22 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanser</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
-    <div id="compines">
-        
-    </div>
-    <div id="but">
-       <button onclick="addCompiney()">+</button>
-    </div>
-    <div id="enterCompiny">
-        <input type="text" placeholder="Enter Name" id="compinyName">
-        <input onclick="register()" type="submit" value="OK">
+    <div class="container">
+        <div id="regster">
+            <div id="compines">
+
+            </div>
+            <div id="but">
+                <button onclick="addCompiney()">+</button>
+            </div>
+            <div id="enterCompiny">
+                <input type="text" placeholder="Enter Name" id="compinyName">
+                <input onclick="register()" type="submit" value="OK">
+            </div>
+        </div>
+        <div id="setelment">
+            <div class="hedding">
+                <div id="customer"></div>
+                <div id="result" class="res"></div>
+
+            </div>
+
+
+            <div id="Entry">
+
+            </div>
+            <div id="addSetilment">
+                <button onclick="addEntry()">+</button>
+            </div>
+
+            <div id="entryDet">
+                <input type="number" placeholder="Amount" id="amount">
+                <input type="text" placeholder="Remark" id="remark">
+
+                <!-- <input type="date" id="date"> -->
+                <div>
+                    <input onclick="submitEntry(1)" type="submit" value="You Give">
+                    <input onclick="submitEntry(-1)" type="submit" value="You Got">
+                </div>
+
+            </div>
+        </div>
     </div>
     <script src="./script.js"></script>
 </body>
+
 </html>

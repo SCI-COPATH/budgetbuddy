@@ -1,7 +1,66 @@
-#enterCompiny{
+/* #enterCompiny{
     display: none;
+} */
+.container{
+    margin: auto;
+    width: 50vw;
+    
 }
 .compinyStyle{
     display: flex;
     justify-content: space-between;
+}
+#result{
+    display: flex;
+    align-items: center;
+}
+#Entry{
+    width: 40vw;
+    margin: auto;
+}
+.res{
+    display: flex;
+    justify-content: space-between;
+}
+.res div{
+    margin: 10px;
+}
+.moneyGet{
+    color: green;
+}
+.moneyGot{
+    color: red;
+}
+.hedding{
+    display: flex;
+    justify-content: space-between;
+}
+/* #setelment{
+    display: none;
+} */
+
+/* #entryDet{
+    display: none;
+} */
+.element_feature{
+    display: flex;
+    justify-content: space-between;
+   
+}
+.showRegister{
+    display: block;
+  
+}
+.showSetelment{
+    display: block;
+    
+}
+.hide{
+    display: none;
+}
+.EnterCom{
+    display: block;
+}
+.EntryDet{
+    display: flex;
 }
