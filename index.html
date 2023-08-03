@@ -46,14 +46,14 @@
                 <button onclick="addEntry(-1)">YOU GOT ₹</button>
             </div>
 
-            <form id="entryDet">
-                <button  class="fa-solid fa-circle-chevron-left fa-2xl" type="reset" value="<"  onclick="removeEntry()"></button>
+            <form id="entryDet" >
+               <button  class="fa-solid fa-circle-chevron-left fa-2xl" type="reset" value="<"  onclick="removeEntry()"></button>
                 <!-- <button type="reset" onclick="hideCompiney()"></button> -->
-                <input type="number" placeholder="Amount" id="amount" autocomplete="off" required>
-                <input type="text" placeholder="Remark" id="remark" autocomplete="off" >
+                <div><input type="number" placeholder="Amount" id="amount" autocomplete="off" required></div>
+                <div><input type="text" placeholder="Remark" id="remark" autocomplete="off" ></div>
                 
 
-                <input type="datetime-local" id="date" required>
+                <div><input type="datetime-local" id="date" required></div>
                 <div >
                     <input type="submit" value="SAVE" id="Save">
                 </div>

@@ -4,6 +4,15 @@ let current
 let mode=0
 let states=[0,0]
 let addSetilmentStatus=0
+
+const dateFormatOptions = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  };
 window.onload = function() {
     // localStorage.clear()
     compines= JSON.parse(localStorage.getItem('allData'))!=null?JSON.parse(localStorage.getItem('allData')):compines;
@@ -88,21 +97,27 @@ function loadEntry(){
         let message
         document.getElementById('Entry').innerHTML=''
         compines[index].entry.forEach(element => {
-           
+            const formattedDate = new Date(element.date).toLocaleString('en-US', dateFormatOptions);
             if(element.amount>=0){
                 message =`<div class='element_feature'>
-                           <div class="label">${element.remark}</div>
-                           <div class='feature-button'>
-                            <div class="amount moneyGet">${element.amount}</div>
-                            <button class="fas fa-edit" href='#'></button>
+                            <div>
+                                <div class="dateTime">${formattedDate}</div>
+                                <div class="label">${element.remark}</div>
                             </div>
+                            <div class='feature-button'>
+                                <div class="amount moneyGet">${element.amount}</div>
+                                <button class="fas fa-edit" onclick="edit()"></button>
+                             </div>
                          </div>`
             }else{
                 message =`<div class='element_feature '>
-                            <div class="label">${element.remark}</div>
+                            <div>
+                                <div class="dateTime">${formattedDate}</div>
+                                <div class="label">${element.remark}</div>
+                            </div>
                             <div class='feature-button'>
                             <div class="amount moneyGot">${-1*element.amount}</div>
-                            <button class="fas fa-edit"></button>
+                            <button class="fas fa-edit " onclick="edit()"></button>
                             </div>
                          </div>`
             }
@@ -188,29 +203,39 @@ function submitEntry(state){
     let index=compines.map(x=>x.name).indexOf(current)
     let remark=document.getElementById('remark').value
     let amount=parseInt(document.getElementById('amount').value)
-    console.log(current)
-    console.log(index)
-    console.log(amount)
+    let readdate=document.getElementById('date').value
+    let date=new Date(readdate)
+    const formattedDate = date.toLocaleString('en-US', dateFormatOptions);
+    //  console.log(formattedDate)
+    // console.log(current)
+    // console.log(index)
+    // console.log(amount)
     if(state<0)
         amount=amount*-1
-    compines[index].entry.push({'remark':remark,'amount':amount})
+    compines[index].entry.push({'remark':remark,'amount':amount ,'date':date})
     compines[index].total+=amount
     
     let message
     if(amount>=0){
         message =`<div class='element_feature'>
-                   <div class="label">${remark}</div>
+                   <div>
+                    <div class="dateTime">${formattedDate}</div>
+                    <div class="label">${remark}</div>
+                   </div>
                    <div class='feature-button'>
                     <div class="amount moneyGet">${amount}</div>
-                    <button class="fas fa-edit"></button>
+                    <button class="fas fa-edit" onclick="edit()"></button>
                    </div>
                  </div>`
     }else{
         message =`<div class='element_feature '>
-                    <div class="label">${remark}</div>
+                    <div>
+                        <div class="dateTime">${formattedDate}</div>
+                        <div class="label">${remark}</div>
+                    </div>
                     <div class='feature-button'>
                     <div class="amount moneyGot">${-1*amount}</div>
-                    <button class="fas fa-edit"></button>
+                    <button class="fas fa-edit" onclick="edit()"></button>
                     </div>
                  </div>`
     }
@@ -234,4 +259,7 @@ function home(){
     loadHome()
     registerMode()
     removeEntry()
+}
+function edit(){
+    
 }

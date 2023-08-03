@@ -4,6 +4,7 @@
 button{
     border: none;
     background: none;
+    margin: 15px 0px
 }
 button:hover {
     cursor: pointer;
@@ -29,6 +30,10 @@ button:hover {
 .compinyStyle{
     display: flex;
     justify-content: space-between;
+}
+.entryForm{
+    display: flex;
+    flex-flow: row;
 }
 #customer{
     display: flex;
@@ -85,5 +90,5 @@ button:hover {
     display: block;
 }
 .EntryDet{
-    display: flex;
+    display: block;
 }
