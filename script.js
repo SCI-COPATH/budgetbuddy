@@ -4,6 +4,7 @@ let current
 let mode=0
 let states=[0,0]
 let addSetilmentStatus
+let editElement
 
 const dateFormatOptions = {
     day: '2-digit',
@@ -14,7 +15,7 @@ const dateFormatOptions = {
     hour12: true
   };
 window.onload = function() {
-    // localStorage.clear()
+        // localStorage.clear()
     compines= JSON.parse(localStorage.getItem('allData'))!=null?JSON.parse(localStorage.getItem('allData')):compines;
     current= JSON.parse(localStorage.getItem('current'))!=null?JSON.parse(localStorage.getItem('current')):current;
     mode= JSON.parse(localStorage.getItem('mode'))!=null?JSON.parse(localStorage.getItem('mode')):mode;
@@ -32,11 +33,11 @@ window.onload = function() {
     }else{
         removeEntry()
         loadEntry()
-
+        hideCompiney()
         setelmentMode()
 
     }
-    // hideCompiney()
+    // 
 }
 let oruForm=document.getElementById('enterCompiny');
 oruForm.addEventListener("submit",(e) => {
@@ -92,24 +93,26 @@ function loadEntry(){
             const formattedDate = new Date(element.date).toLocaleString('en-US', dateFormatOptions);
             if(element.amount>=0){
                 message =`<div class='element_feature'>
+                            <span class='hide'>${element.id}</span>
                             <div>
                                 <div class="dateTime">${formattedDate}</div>
                                 <div class="label">${element.remark}</div>
                             </div>
                             <div class='feature-button'>
                                 <div class="amount moneyGet">${element.amount}</div>
-                                <button class="fas fa-edit" onclick="edit()"></button>
+                                <button class="fas fa-edit" onclick="edit(this)"></button>
                              </div>
                          </div>`
             }else{
                 message =`<div class='element_feature '>
+                            <span class='hide'>${element.id}</span>
                             <div>
                                 <div class="dateTime">${formattedDate}</div>
                                 <div class="label">${element.remark}</div>
                             </div>
                             <div class='feature-button'>
                             <div class="amount moneyGot">${-1*element.amount}</div>
-                            <button class="fas fa-edit " onclick="edit()"></button>
+                            <button class="fas fa-edit " onclick="edit(this)"></button>
                             </div>
                          </div>`
             }
@@ -189,6 +192,23 @@ function addEntry(x){
     document.getElementById('entryDet').classList.remove('hide')
     addSetilmentStatus=x
     document.getElementById('setelment').classList.add('hide')
+    if(x=='edit'){
+        document.getElementById('amount').value=parseInt(editElement.amount)
+        document.getElementById('remark').value=editElement.remark
+        
+        let selectedDate = new Date(editElement.date);
+
+        // Adjust the date to Indian Standard Time (IST) timezone
+        let indianStandardTimeOffset = 330; // IST is UTC+5:30
+        let adjustedDate = new Date(selectedDate.getTime() + indianStandardTimeOffset * 60 * 1000);
+    
+        // Format the date as required by the datetime-local input
+        let formattedDate = adjustedDate.toISOString().slice(0, 16);
+    
+        // Set the value of the input directly using the formatted date
+        document.getElementById('date').value = formattedDate;
+        
+    }
 }
 function removeEntry(){
     document.getElementById('entryDet').classList.remove("EntryDet")
@@ -210,36 +230,54 @@ function submitEntry(state){
     // console.log(index)
     // console.log(amount)
     if(state=='edit'){
-
+   
+        // console.log('edit')
+        console.log(editElement)
+        let cash=editElement.amount
+        let index=compines.map(x=>x.name).indexOf(current)
+        let entryIndex=compines[index].entry.map(x=>x.id).indexOf(editElement.id)
+        compines[index].entry[entryIndex].amount=parseInt(amount)
+        compines[index].entry[entryIndex].remark=remark
+        
+        // console.log(compines)
+        compines[index].total=parseInt(compines[index].total)-parseInt(cash)+parseInt(amount)
+        console.log(parseInt(compines[index].total))
+        console.log(parseInt(cash))
+        console.log(parseInt(amount))
+        // console.log(parseInt(compines[index].total)-parseInt(editElement.total)+parseInt(amount))
+     
     }
     else{
-        console.log('2')
+
+        // console.log('2')
         if(state=='neg')
             amount=amount*-1
-        compines[index].entry.push({'remark':remark,'amount':amount ,'date':date})
+        compines[index].entry.push({'remark':remark,'amount':amount ,'date':date ,'id':compines[index].entry.length})
         compines[index].total+=amount
         
         let message
         if(amount>=0){
             message =`<div class='element_feature'>
+                    <span class='hide'>${compines[index].entry.length-1}</span>
                     <div>
                         <div class="dateTime">${formattedDate}</div>
                         <div class="label">${remark}</div>
                     </div>
                     <div class='feature-button'>
                         <div class="amount moneyGet">${amount}</div>
-                        <button class="fas fa-edit" onclick="edit()"></button>
+                        <button class="fas fa-edit" onclick="edit(this)"></button>
                     </div>
                     </div>`
         }else{
             message =`<div class='element_feature '>
+                      <span class='hide'>${compines[index].entry.length-1}</span>
                         <div>
                             <div class="dateTime">${formattedDate}</div>
                             <div class="label">${remark}</div>
                         </div>
                         <div class='feature-button'>
                         <div class="amount moneyGot">${-1*amount}</div>
-                        <button class="fas fa-edit" onclick="edit()"></button>
+                        <button class="fas fa-edit" onclick="edit(this)"></button>
                         </div>
                     </div>`
         }
@@ -249,13 +287,18 @@ function submitEntry(state){
         }else{
             document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[index].total}</h2>`
         }
+        removeEntry()
     }
-    removeEntry()
+    
     localStorage.setItem('allData', JSON.stringify(compines))
     localStorage.setItem('mode',JSON.stringify(mode))
     localStorage.setItem('current',JSON.stringify(current))
     document.getElementById('remark').value=''
     document.getElementById('amount').value=''
+     if(state=='edit'){
+           
+         location.reload()
+    }
 
 }
 function home(){
@@ -267,6 +310,9 @@ function home(){
     registerMode()
     
 }
-function edit(){
-    submitEntry('edit')
+function edit(data){
+    let id=data.parentElement.parentElement.querySelector('span').innerHTML
+    editElement=compines.filter(x=>x.name==current)[0].entry.filter(x=>x.id==id)[0]
+    addEntry('edit')
+    
 }
