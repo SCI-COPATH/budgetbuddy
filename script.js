@@ -78,7 +78,7 @@ function loadHome(){
 function loadEntry(){
     let index=compines.map(x=>x.name).indexOf(current)
         console.log(index)
-        document.getElementById('customer').innerHTML=`<button onclick="home()"><</button><h2>${current}</h2>`
+        document.getElementById('customer').innerHTML=`<button onclick="home()"  class="fa-solid fa-circle-chevron-left fa-2xl" ></button><h2>${current}</h2>`
 
         if(compines[index].total>=0){
             document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
@@ -92,12 +92,18 @@ function loadEntry(){
             if(element.amount>=0){
                 message =`<div class='element_feature'>
                            <div class="label">${element.remark}</div>
+                           <div class='feature-button'>
                             <div class="amount moneyGet">${element.amount}</div>
+                            <button class="fas fa-edit" href='#'></button>
+                            </div>
                          </div>`
             }else{
                 message =`<div class='element_feature '>
                             <div class="label">${element.remark}</div>
+                            <div class='feature-button'>
                             <div class="amount moneyGot">${-1*element.amount}</div>
+                            <button class="fas fa-edit"></button>
+                            </div>
                          </div>`
             }
             document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
@@ -120,10 +126,12 @@ function setelmentMode(){
     // document.getElementById('setelment').style.display = "flex";
 }
 function addCompiney(){
+    document.getElementById('but').classList.add('hide')
     document.getElementById('enterCompiny').classList.add("EnterCom")
     document.getElementById('enterCompiny').classList.remove("hide")
 }
 function hideCompiney(){
+    document.getElementById('but').classList.remove('hide')
     document.getElementById('enterCompiny').classList.add("hide")
     document.getElementById('enterCompiny').classList.remove("EnterCom")
 }
@@ -158,7 +166,7 @@ function selectOp(data){
     localStorage.setItem('mode',JSON.stringify(mode))
     current=data.querySelector('h4').innerText
     localStorage.setItem('current',JSON.stringify(current))
-    document.getElementById('customer').innerHTML=`<button onclick="home()"><</button><h2>${current}</h2>`
+    document.getElementById('customer').innerHTML=`<button  class="fa-solid fa-circle-chevron-left fa-2xl"  onclick="home()"></button><h2>${current}</h2>`
     loadEntry()
     setelmentMode()
     
@@ -192,12 +200,18 @@ function submitEntry(state){
     if(amount>=0){
         message =`<div class='element_feature'>
                    <div class="label">${remark}</div>
+                   <div class='feature-button'>
                     <div class="amount moneyGet">${amount}</div>
+                    <button class="fas fa-edit"></button>
+                   </div>
                  </div>`
     }else{
         message =`<div class='element_feature '>
                     <div class="label">${remark}</div>
+                    <div class='feature-button'>
                     <div class="amount moneyGot">${-1*amount}</div>
+                    <button class="fas fa-edit"></button>
+                    </div>
                  </div>`
     }
     document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)

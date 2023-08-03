@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BudgetBuddy</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="./assets/logoicon.svg" type="image/svg+xml" class="logoImg" >
    
 </head>
@@ -19,10 +20,11 @@
             </div>
             <div id="but">
                 
-                <button onclick="addCompiney()">+</button>
+                <button onclick="addCompiney()" class="fa-solid fa-circle-plus fa-2xl"></button>
             </div>
             <form id="enterCompiny">
-                <input type="reset" value="<"  onclick="hideCompiney()">
+                <button class="fa-solid fa-circle-chevron-left fa-2xl" type="reset" onclick="hideCompiney()"></button>
+                <!-- <input  value="<"  onclick="hideCompiney()"> -->
                 <input type="text" placeholder="Enter Name" id="compinyName" autocomplete="off" required>
                 <input type="submit" value="OK">
             </form>
@@ -45,7 +47,8 @@
             </div>
 
             <form id="entryDet">
-                <input type="reset" value="<"  onclick="removeEntry()">
+                <button  class="fa-solid fa-circle-chevron-left fa-2xl" type="reset" value="<"  onclick="removeEntry()"></button>
+                <!-- <button type="reset" onclick="hideCompiney()"></button> -->
                 <input type="number" placeholder="Amount" id="amount" autocomplete="off" required>
                 <input type="text" placeholder="Remark" id="remark" autocomplete="off" >
                 

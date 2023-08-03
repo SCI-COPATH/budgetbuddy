@@ -1,6 +1,16 @@
 /* #enterCompiny{
     display: none;
 } */
+button{
+    border: none;
+    background: none;
+}
+button:hover {
+    cursor: pointer;
+}   
+.feature-button{
+    display: flex;
+}
 .image-head{
     width: 50vw;
 }
