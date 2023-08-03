@@ -4,7 +4,7 @@ let current
 let mode=0
 let states=[0,0]
 window.onload = function() {
-    // localStorage.clear()
+    //  localStorage.clear()
     compines= JSON.parse(localStorage.getItem('allData'))!=null?JSON.parse(localStorage.getItem('allData')):compines;
     current= JSON.parse(localStorage.getItem('current'))!=null?JSON.parse(localStorage.getItem('current')):current;
     mode= JSON.parse(localStorage.getItem('mode'))!=null?JSON.parse(localStorage.getItem('mode')):mode;
@@ -28,12 +28,54 @@ window.onload = function() {
     }
     // hideCompiney()
 }
-oruForm=document.getElementById('enterCompiny');
+let oruForm=document.getElementById('enterCompiny');
 oruForm.addEventListener("submit",(e) => {
     e.preventDefault()
     // console.log(inputObj.value)
     register() 
 })
+const form = document.getElementById("entryDet");
+const giveButton = document.getElementById("give");
+const gotButton = document.getElementById("got");
+
+// Event listener for form submission
+form.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const amountInput = document.getElementById("amount");
+    const amount = parseFloat(amountInput.value);
+    const remark = document.getElementById("remark").value;
+
+    if (isNaN(amount)) {
+        console.log("Please enter a valid amount.");
+        return;
+    }
+
+    if (giveButton.clicked) {
+        // console.log("You Give:");
+        // console.log("Amount: ", amount);
+        // console.log("Remark: ", remark);
+        submitEntry(1)
+    } else if (gotButton.clicked) {
+        // console.log("You Got:");
+        // console.log("Amount: ", amount);
+        // console.log("Remark: ", remark);
+        submitEntry(-1)
+    }
+});
+
+// Event listener for "You Give" button
+giveButton.addEventListener("click", function() {
+    giveButton.clicked = true;
+    gotButton.clicked = false;
+});
+
+// Event listener for "You Got" button
+gotButton.addEventListener("click", function() {
+    giveButton.clicked = false;
+    gotButton.clicked = true;
+});
+
 function loadHome(){
     let data=document.getElementById('compines')
     let message
@@ -187,6 +229,8 @@ function submitEntry(state){
     localStorage.setItem('allData', JSON.stringify(compines))
     localStorage.setItem('mode',JSON.stringify(mode))
     localStorage.setItem('current',JSON.stringify(current))
+    document.getElementById('remark').value=''
+    document.getElementById('amount').value=''
 
 }
 function home(){

@@ -37,17 +37,17 @@
                 <button onclick="addEntry()">+</button>
             </div>
 
-            <div id="entryDet">
+            <form id="entryDet">
                 <input type="number" placeholder="Amount" id="amount" autocomplete="off" required>
                 <input type="text" placeholder="Remark" id="remark" autocomplete="off" >
 
                 <!-- <input type="date" id="date"> -->
                 <div >
-                    <input onclick="submitEntry(1)"  type="submit" value="You Give">
-                    <input onclick="submitEntry(-1)" type="submit" value="You Got">
+                    <input type="submit" value="You Give" id="give">
+                    <input type="submit" id="got" value="You Got">
                 </div>
 
-            </div>
+            </form>
         </div>
     </div>
     <script src="./script.js"></script>
