@@ -3,7 +3,7 @@ let compines=[]
 let current
 let mode=0
 let states=[0,0]
-let addSetilmentStatus=0
+let addSetilmentStatus
 
 const dateFormatOptions = {
     day: '2-digit',
@@ -18,9 +18,9 @@ window.onload = function() {
     compines= JSON.parse(localStorage.getItem('allData'))!=null?JSON.parse(localStorage.getItem('allData')):compines;
     current= JSON.parse(localStorage.getItem('current'))!=null?JSON.parse(localStorage.getItem('current')):current;
     mode= JSON.parse(localStorage.getItem('mode'))!=null?JSON.parse(localStorage.getItem('mode')):mode;
-    console.log(compines)
-    console.log(current)
-    console.log(mode)
+    // console.log(compines)
+    // console.log(current)
+    // console.log(mode)
     if(mode==0){
         registerMode()
         removeEntry()
@@ -49,18 +49,10 @@ const form = document.getElementById("entryDet");
 // Event listener for form submission
 form.addEventListener("submit", event=> {
     event.preventDefault(); // Prevent form submission
-
-    if (addSetilmentStatus>0) {
-        // console.log("You Give:");
-        // console.log("Amount: ", amount);
-        // console.log("Remark: ", remark);
-        submitEntry(1)
-    } else if (addSetilmentStatus<0) {
-        // console.log("You Got:");
-        // console.log("Amount: ", amount);
-        // console.log("Remark: ", remark);
-        submitEntry(-1)
-    }
+    console.log(1)
+    submitEntry(addSetilmentStatus)
+    
+    
 });
 
 // Event listener for "You Give" button
@@ -131,12 +123,14 @@ function registerMode(){
     document.getElementById('setelment').classList.add('hide')
     document.getElementById('regster').classList.remove("hide")
     document.getElementById('setelment').classList.remove('showSetelment')
+    document.getElementById('addSetilment').classList.add('hide')
 }
 function setelmentMode(){
     document.getElementById('regster').classList.add("hide")
     document.getElementById('setelment').classList.add('showSetelment')
     document.getElementById('regster').classList.remove("showRegister")
     document.getElementById('setelment').classList.remove('hide')
+    document.getElementById('addSetilment').classList.remove('hide')
     // document.getElementById('regster').style.display = "none";
     // document.getElementById('setelment').style.display = "flex";
 }
@@ -144,11 +138,13 @@ function addCompiney(){
     document.getElementById('but').classList.add('hide')
     document.getElementById('enterCompiny').classList.add("EnterCom")
     document.getElementById('enterCompiny').classList.remove("hide")
+    document.getElementById('compines').classList.add('hide')
 }
 function hideCompiney(){
     document.getElementById('but').classList.remove('hide')
     document.getElementById('enterCompiny').classList.add("hide")
     document.getElementById('enterCompiny').classList.remove("EnterCom")
+    document.getElementById('compines').classList.remove('hide')
 }
 function register(){
     let name =document.getElementById('compinyName').value
@@ -192,14 +188,17 @@ function addEntry(x){
     document.getElementById('entryDet').classList.add("EntryDet")
     document.getElementById('entryDet').classList.remove('hide')
     addSetilmentStatus=x
+    document.getElementById('setelment').classList.add('hide')
 }
 function removeEntry(){
     document.getElementById('entryDet').classList.remove("EntryDet")
     document.getElementById('entryDet').classList.add('hide')
+    document.getElementById('setelment').classList.remove('hide')
 }
 function submitEntry(state){
     // state.preventDefault();
-   
+    
+     console.log(state)
     let index=compines.map(x=>x.name).indexOf(current)
     let remark=document.getElementById('remark').value
     let amount=parseInt(document.getElementById('amount').value)
@@ -210,40 +209,46 @@ function submitEntry(state){
     // console.log(current)
     // console.log(index)
     // console.log(amount)
-    if(state<0)
-        amount=amount*-1
-    compines[index].entry.push({'remark':remark,'amount':amount ,'date':date})
-    compines[index].total+=amount
-    
-    let message
-    if(amount>=0){
-        message =`<div class='element_feature'>
-                   <div>
-                    <div class="dateTime">${formattedDate}</div>
-                    <div class="label">${remark}</div>
-                   </div>
-                   <div class='feature-button'>
-                    <div class="amount moneyGet">${amount}</div>
-                    <button class="fas fa-edit" onclick="edit()"></button>
-                   </div>
-                 </div>`
-    }else{
-        message =`<div class='element_feature '>
+    if(state=='edit'){
+
+    }
+    else{
+        console.log('2')
+        if(state=='neg')
+            amount=amount*-1
+        compines[index].entry.push({'remark':remark,'amount':amount ,'date':date})
+        compines[index].total+=amount
+        
+        let message
+        if(amount>=0){
+            message =`<div class='element_feature'>
                     <div>
                         <div class="dateTime">${formattedDate}</div>
                         <div class="label">${remark}</div>
                     </div>
                     <div class='feature-button'>
-                    <div class="amount moneyGot">${-1*amount}</div>
-                    <button class="fas fa-edit" onclick="edit()"></button>
+                        <div class="amount moneyGet">${amount}</div>
+                        <button class="fas fa-edit" onclick="edit()"></button>
                     </div>
-                 </div>`
-    }
-    document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
-    if(compines[index].total>=0){
-        document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
-    }else{
-        document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[index].total}</h2>`
+                    </div>`
+        }else{
+            message =`<div class='element_feature '>
+                        <div>
+                            <div class="dateTime">${formattedDate}</div>
+                            <div class="label">${remark}</div>
+                        </div>
+                        <div class='feature-button'>
+                        <div class="amount moneyGot">${-1*amount}</div>
+                        <button class="fas fa-edit" onclick="edit()"></button>
+                        </div>
+                    </div>`
+        }
+        document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
+        if(compines[index].total>=0){
+            document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
+        }else{
+            document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[index].total}</h2>`
+        }
     }
     removeEntry()
     localStorage.setItem('allData', JSON.stringify(compines))
@@ -257,9 +262,11 @@ function home(){
     mode=0
     localStorage.setItem('mode',JSON.stringify(mode))
     loadHome()
-    registerMode()
+    
     removeEntry()
+    registerMode()
+    
 }
 function edit(){
-    
+    submitEntry('edit')
 }

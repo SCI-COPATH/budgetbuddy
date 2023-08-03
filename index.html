@@ -42,23 +42,26 @@
             </div>
             <div id="addSetilment">
                 <!-- <button onclick="addEntry()">+</button> -->
-                <button onclick="addEntry(+1)">YOU GIVE ₹</button>
-                <button onclick="addEntry(-1)">YOU GOT ₹</button>
+                <button onclick="addEntry('neg')">YOU GIVE ₹</button>
+                <button onclick="addEntry('pos')">YOU GOT ₹</button>
             </div>
 
+            
+        </div>
+        <div>
             <form id="entryDet" >
-               <button  class="fa-solid fa-circle-chevron-left fa-2xl" type="reset" value="<"  onclick="removeEntry()"></button>
-                <!-- <button type="reset" onclick="hideCompiney()"></button> -->
-                <div><input type="number" placeholder="Amount" id="amount" autocomplete="off" required></div>
-                <div><input type="text" placeholder="Remark" id="remark" autocomplete="off" ></div>
-                
-
-                <div><input type="datetime-local" id="date" required></div>
-                <div >
-                    <input type="submit" value="SAVE" id="Save">
-                </div>
-
-            </form>
+                <button  class="fa-solid fa-circle-chevron-left fa-2xl" type="reset" value="<"  onclick="removeEntry()"></button>
+                 <!-- <button type="reset" onclick="hideCompiney()"></button> -->
+                 <div><input type="number" placeholder="Amount" id="amount" autocomplete="off" required></div>
+                 <div><input type="text" placeholder="Remark" id="remark" autocomplete="off" ></div>
+                 
+ 
+                 <div><input type="datetime-local" id="date" required></div>
+                 <div >
+                     <input type="submit" value="SAVE" id="Save">
+                 </div>
+ 
+             </form>
         </div>
     </div>
     <script src="./script.js"></script>
