@@ -4,20 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanser</title>
+    <title>BudgetBuddy</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="icon" href="./assets/logoicon.svg" type="image/svg+xml" class="logoImg" >
+   
 </head>
 
 <body>
+    <img src="./assets/logo.svg" alt="" class="image-head">
     <div class="container">
         <div id="regster">
             <div id="compines">
 
             </div>
             <div id="but">
+                
                 <button onclick="addCompiney()">+</button>
             </div>
             <form id="enterCompiny">
+                <input type="reset" value="<"  onclick="hideCompiney()">
                 <input type="text" placeholder="Enter Name" id="compinyName" autocomplete="off" required>
                 <input type="submit" value="OK">
             </form>
@@ -34,17 +39,20 @@
 
             </div>
             <div id="addSetilment">
-                <button onclick="addEntry()">+</button>
+                <!-- <button onclick="addEntry()">+</button> -->
+                <button onclick="addEntry(+1)">YOU GIVE ₹</button>
+                <button onclick="addEntry(-1)">YOU GOT ₹</button>
             </div>
 
             <form id="entryDet">
+                <input type="reset" value="<"  onclick="removeEntry()">
                 <input type="number" placeholder="Amount" id="amount" autocomplete="off" required>
                 <input type="text" placeholder="Remark" id="remark" autocomplete="off" >
+                
 
-                <!-- <input type="date" id="date"> -->
+                <input type="datetime-local" id="date" required>
                 <div >
-                    <input type="submit" value="You Give" id="give">
-                    <input type="submit" id="got" value="You Got">
+                    <input type="submit" value="SAVE" id="Save">
                 </div>
 
             </form>

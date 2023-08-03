@@ -1,6 +1,16 @@
 /* #enterCompiny{
     display: none;
 } */
+.image-head{
+    width: 50vw;
+}
+.logoImg g{
+    fill:white;
+}
+.logoImg path{
+    fill:white;
+    fill-opacity:1;stroke:none;stroke-width:1.90894973;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1
+}
 .container{
     margin: auto;
     width: 50vw;
@@ -9,6 +19,9 @@
 .compinyStyle{
     display: flex;
     justify-content: space-between;
+}
+#customer{
+    display: flex;
 }
 #result{
     display: flex;
@@ -32,7 +45,7 @@
     color: red;
 }
 .hedding{
-    display: flex;
+    display: block;
     justify-content: space-between;
 }
 /* #setelment{

@@ -3,8 +3,9 @@ let compines=[]
 let current
 let mode=0
 let states=[0,0]
+let addSetilmentStatus=0
 window.onload = function() {
-    //  localStorage.clear()
+    // localStorage.clear()
     compines= JSON.parse(localStorage.getItem('allData'))!=null?JSON.parse(localStorage.getItem('allData')):compines;
     current= JSON.parse(localStorage.getItem('current'))!=null?JSON.parse(localStorage.getItem('current')):current;
     mode= JSON.parse(localStorage.getItem('mode'))!=null?JSON.parse(localStorage.getItem('mode')):mode;
@@ -35,28 +36,17 @@ oruForm.addEventListener("submit",(e) => {
     register() 
 })
 const form = document.getElementById("entryDet");
-const giveButton = document.getElementById("give");
-const gotButton = document.getElementById("got");
 
 // Event listener for form submission
-form.addEventListener("submit", function(event) {
+form.addEventListener("submit", event=> {
     event.preventDefault(); // Prevent form submission
 
-    const amountInput = document.getElementById("amount");
-    const amount = parseFloat(amountInput.value);
-    const remark = document.getElementById("remark").value;
-
-    if (isNaN(amount)) {
-        console.log("Please enter a valid amount.");
-        return;
-    }
-
-    if (giveButton.clicked) {
+    if (addSetilmentStatus>0) {
         // console.log("You Give:");
         // console.log("Amount: ", amount);
         // console.log("Remark: ", remark);
         submitEntry(1)
-    } else if (gotButton.clicked) {
+    } else if (addSetilmentStatus<0) {
         // console.log("You Got:");
         // console.log("Amount: ", amount);
         // console.log("Remark: ", remark);
@@ -65,16 +55,6 @@ form.addEventListener("submit", function(event) {
 });
 
 // Event listener for "You Give" button
-giveButton.addEventListener("click", function() {
-    giveButton.clicked = true;
-    gotButton.clicked = false;
-});
-
-// Event listener for "You Got" button
-gotButton.addEventListener("click", function() {
-    giveButton.clicked = false;
-    gotButton.clicked = true;
-});
 
 function loadHome(){
     let data=document.getElementById('compines')
@@ -84,12 +64,12 @@ function loadHome(){
         if(element.total>=0){
              message=`<div class="compinyStyle" onClick=selectOp(this)>
                     <h4>${element.name}<h4>
-                    <div class=moneyGet>${element.total}</div>
+                    <div class='moneyGet'>${element.total}</div>
                     </div>`
         }else{
             message=`<div class="compinyStyle" onClick=selectOp(this)>
             <h4>${element.name}<h4>
-            <div moneyGot>${element.total}</div>
+            <div class='moneyGot'>${-1*element.total}</div>
             </div>`
         }
         data.insertAdjacentHTML("afterbegin",message)
@@ -185,9 +165,10 @@ function selectOp(data){
     // hideCompiney()
     
 }
-function addEntry(){
+function addEntry(x){
     document.getElementById('entryDet').classList.add("EntryDet")
     document.getElementById('entryDet').classList.remove('hide')
+    addSetilmentStatus=x
 }
 function removeEntry(){
     document.getElementById('entryDet').classList.remove("EntryDet")
