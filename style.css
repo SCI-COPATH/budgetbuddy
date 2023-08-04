@@ -99,6 +99,7 @@ body{
     /* font-family: 'Open Sans', sans-serif; */
     font-family: 'Poppins', sans-serif;
 /* font-family: 'Raleway', sans-serif; */
+    height: 100%;
 }
 h4,h5,p{
     padding: 0;
