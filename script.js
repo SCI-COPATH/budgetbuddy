@@ -15,7 +15,7 @@ const dateFormatOptions = {
     hour12: true
   };
 window.onload = function() {
-        //  localStorage.clear()
+    //  localStorage.clear()
     compines= JSON.parse(localStorage.getItem('allData'))!=null?JSON.parse(localStorage.getItem('allData')):compines;
     current= JSON.parse(localStorage.getItem('current'))!=null?JSON.parse(localStorage.getItem('current')):current;
     mode= JSON.parse(localStorage.getItem('mode'))!=null?JSON.parse(localStorage.getItem('mode')):mode;
@@ -27,7 +27,8 @@ window.onload = function() {
         removeEntry()
         hideCompiney()
         regStatus=1
-        loadHome()                
+        loadHome()    
+        document.getElementById('setelment').classList.add('hide')            
         // 
 
     }else{
@@ -35,6 +36,7 @@ window.onload = function() {
         loadEntry()
         hideCompiney()
         setelmentMode()
+        document.getElementById('setelment').classList.remove('hide')
 
     }
     // 
@@ -80,7 +82,9 @@ function loadHome(){
             </div>`
         }
         data.insertAdjacentHTML("afterbegin",message)
+        
     });
+    data.insertAdjacentHTML("beforeend",`<div class='dummy'></div>`)
 }
 function loadEntry(){
     let index=compines.map(x=>x.name).indexOf(current)
@@ -109,7 +113,7 @@ function loadEntry(){
                             </div>
                             <div class='feature-button'>
                                 <div class="amount moneyGet">${element.amount}</div>
-                                <button class="fas fa-edit" onclick="edit(this)"></button>
+                                <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                              </div>
                          </div>`
             }else{
@@ -121,28 +125,31 @@ function loadEntry(){
                             </div>
                             <div class='feature-button'>
                             <div class="amount moneyGot">${-1*element.amount}</div>
-                            <button class="fas fa-edit " onclick="edit(this)"></button>
+                            <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                             </div>
                          </div>`
             }
             document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
         });
+        document.getElementById('Entry').insertAdjacentHTML("beforeend",`<div class='dummy'></div>`)
 }
 function registerMode(){
     // document.getElementById('regster').style.display = "flex";
     // document.getElementById('setelment').style.display = "none";
-    document.getElementById('regster').classList.add("showRegister")
+    // document.getElementById('regster').classList.add("showRegister")
     document.getElementById('setelment').classList.add('hide')
     document.getElementById('regster').classList.remove("hide")
-    document.getElementById('setelment').classList.remove('showSetelment')
+    // document.getElementById('setelment').classList.remove('showSetelment')
     document.getElementById('addSetilment').classList.add('hide')
+    // document.getElementById('Entry').classList.add('hide')
 }
 function setelmentMode(){
     document.getElementById('regster').classList.add("hide")
-    document.getElementById('setelment').classList.add('showSetelment')
-    document.getElementById('regster').classList.remove("showRegister")
+    // document.getElementById('setelment').classList.add('showSetelment')
+    // document.getElementById('regster').classList.remove("showRegister")
     document.getElementById('setelment').classList.remove('hide')
     document.getElementById('addSetilment').classList.remove('hide')
+    // document.getElementById('Entry').classList.remove('hide')
     // document.getElementById('regster').style.display = "none";
     // document.getElementById('setelment').style.display = "flex";
 }
@@ -294,7 +301,7 @@ function submitEntry(state){
                     </div>
                     <div class='feature-button'>
                         <div class="amount moneyGet">${amount}</div>
-                        <button class="fas fa-edit" onclick="edit(this)"></button>
+                        <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                     </div>
                     </div>`
         }else{
@@ -306,7 +313,7 @@ function submitEntry(state){
                         </div>
                         <div class='feature-button'>
                         <div class="amount moneyGot">${-1*amount}</div>
-                        <button class="fas fa-edit" onclick="edit(this)"></button>
+                        <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                         </div>
                     </div>`
         }

@@ -1,6 +1,99 @@
 /* #enterCompiny{
     display: none;
 } */
+#but:hover{
+    cursor: pointer;
+    background-color: #393E46;
+}
+#customer{
+    display: flex;
+    justify-content: space-between;
+    
+}
+#customer div{
+    display: flex;
+}
+#result{
+    display: flex;
+    align-items: center;
+}
+#enterCompiny{
+    padding: 10px;
+}
+#Entry{
+    /* width: 40vw; */
+    margin: auto;
+    height: 65vh;
+    border-radius: 10px;
+    margin: 10px;
+    overflow-y: auto;
+    
+}
+
+
+#enterCompiny button{
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+#enterCompiny button:hover{
+    color: #393E46;
+}
+#enterCompiny div{
+    display: flex;
+    justify-content: center;
+}
+#enterCompiny input{
+    margin-top: 30px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: #E8F9FD;
+    background-color: #212121;
+    border: none;
+}
+#setelment{
+    background-color: #E8F9FD;
+    padding: 5px 10px ;
+    border-radius: 30px;
+    margin: 10px;
+    /* height: 88vh; */
+    position: relative;
+    
+} 
+#addSetilment{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    /* width: 80%; */
+    left: 0; /* Position the child element at the left edge */
+    right: 0; /* Position the child element at the right edge */
+    margin: auto;
+    
+    
+}
+
+
+#addSetilment button{
+    margin: 10px;
+    color: #E8F9FD;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bolder;
+}
+.gotB{
+    background-color: #59CE8F;
+}
+.gotB:hover{
+    background-color: #557A46;
+}
+.giveB{
+    background-color: #FF1E00;
+}
+.giveB:hover{
+    background-color:#CD1818;
+}
+
 body{
     background-color: #212121;
     /* font-family: 'Open Sans', sans-serif; */
@@ -15,7 +108,8 @@ button{
     border: none;
     background: none;
     margin: 15px 0px;
-    color:red;
+     color:#212121 
+    /* color: #FF1E00; */
 }
 button:hover {
     cursor: pointer;
@@ -34,23 +128,49 @@ button:hover {
     background-color: #FF1E00;
 }
 .listComp{
+    
+    
+    /* width: 50vw; */
+    height:76vh ;
+    overflow-y: auto;
+    
+}
+::-webkit-scrollbar {
+    width: 0px;
+  }
+.dummy{
+    height: 10vh;
+}
+.flotingButBase{
     position: relative;
     background-color: #E8F9FD;
-    padding: 10px 0px;
-    margin: 10px;
+    padding: 0px 0px; 
+    margin: 15px;
     border-radius: 20px;
-    /* width: 50vw; */
-    min-height:70vh ;
+   
 }
+
 .plusbut{
     position: absolute; 
+    bottom: 14px;
+    right: 25px;
+   
     /* font-family: 'Open Sans', sans-serif; */
     /* font-family: 'Poppins', sans-serif; */
     /* font-family: 'Raleway', sans-serif; */
     /* z-index: -1; */
     background-color: #212121;
-    
+    border-radius: 50px;
+    padding: 10px;
+    color: #E8F9FD;
+    width:fit-content;
+    margin: 0;
+   
 }
+.plusbut span{
+    padding: 10px;
+}
+
 .plusbut button{
     color: #E8F9FD;
     
@@ -65,7 +185,12 @@ button:hover {
     width: fit-content;
     margin: auto;
 }
+.hed{
+    margin: auto;
+}
 .hed img{
+    display: flex;
+    margin: auto;
     height: 40px;
     width: auto;
    
@@ -73,13 +198,7 @@ button:hover {
 form{
     display: none;
 }
-#customer{
-    display: flex;
-    justify-content: space-between;
-}
-#customer div{
-    display: flex;
-}
+
   
 .feature-button{
     display: flex;
@@ -87,20 +206,23 @@ form{
 .image-head{
     width: 50vw;
 }
-.logoImg g{
-    fill:white;
-}
+
 
 .container{
     margin: auto;
-    width: 50vw;
+    max-width: 450px;
     
+}
+.compinyStyle:hover{
+    cursor: pointer;
+    background-color: #212121;
 }
 .compinyStyle{
     display: flex;
     justify-content: space-between;
-    background-color: #212121;
+    background-color: #393E46;
     color:#E8F9FD;
+    
     margin: 10px;
     padding: 10px;
     border-radius: 20px;
@@ -119,14 +241,7 @@ form{
     flex-flow: row;
 }
 
-#result{
-    display: flex;
-    align-items: center;
-}
-#Entry{
-    width: 40vw;
-    margin: auto;
-}
+
 .res{
     display: flex;
     justify-content: space-between;
@@ -135,32 +250,69 @@ form{
     margin: 10px;
 }
 .moneyGet{
-    color: green;
+    color: #59CE8F;
 }
 .moneyGot{
-    color: red;
+    color: #FF1E00;
 }
 .hedding{
     display: block;
-    justify-content: space-between;
+    justify-content: space-between;   
+    /* background-color:#393E46;
+    color: #E8F9FD; */
+    /* padding: 10px; */
+    border-radius: 30px;
+    margin-bottom: 20px ;
 }
-/* #setelment{
-    display: none;
-} */
+.hedding button:hover{
+    color: #393E46;
+}
+ 
 
-/* #entryDet{
-    display: none;
-} */
+#entryDet{
+    background-color: #E8F9FD;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 20px;
+    
+} 
+#entryDet div{
+    display: flex;
+    justify-content: center;
+}
+#entryDet input{
+    background-color: #212121;
+    color: #E8F9FD;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 20px;
+}
 .amount{
     font-size: larger;
 }
 .element_feature{
     display: flex;
     justify-content: space-between;
-   
+    background-color: #393E46;
+    color: #E8F9FD;
+    padding: 10px;
+    align-items: center;
+    border-radius: 20px;
+    margin:10px 0px;
+}
+.element_feature button{
+    color: #E8F9FD;
+}
+.element_feature button:hover{
+    color:gray ;
+}
+.amount {
+    align-self: center;
+    font-weight: bold;
 }
 .showRegister{
-    display: block;
+    display: block; 
   
 }
 .showSetelment{

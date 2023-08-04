@@ -6,46 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BudgetBuddy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" href="./assets/logoicon.svg" type="image/svg+xml" class="logoImg" >
-   
+    <link rel="icon" href="./assets/logoicon.svg" type="image/svg+xml" class="logoImg">
+
 </head>
 
 <body>
     <div class="hed">
-        <img src="./assets/logo.svg" alt="" class="image-head">
+        <!-- <object class="image-head" data="http://www.w3.org/2000/svg" type="image/svg+xml"></object> -->
+        <img src="./assets/logo.svg" alt="logo" class="image-head">
+        <!-- <object data="./assets/logo.svg" type="image/svg+xml" id="image-head"></object> -->
     </div>
-    
+
     <div class="container">
         <div id="regster">
             <!-- <div class="Summary"> -->
-                <div class="summary-inner" id="sum" >
-                    <div class="GIVE box">
-                        <h5>You will give</h5>
-                        <p>250</p>
-                    </div>
-                    <div class="GOT box">
-                        <h5>You will got</h5>
-                        <p>300</p>
-                    </div>
-                </div>
-            <!-- </div> -->
-            <div id="compines" class="listComp">
 
+            <div class="summary-inner" id="sum">
+                <!-- <div class="GIVE box">
+                    <h5>You will give</h5>
+                    <p>250</p>
+                </div>
+                <div class="GOT box">
+                    <h5>You will got</h5>
+                    <p>300</p>
+                </div> -->
             </div>
-            <div id="but" class="plusbut">
-                
-                <button onclick="addCompiney()" class="fa-solid fa-circle-plus fa-2xl"></button>Add Friend
+            <div class="flotingButBase">
+                <!-- </div> -->
+                <div id="compines" class="listComp">
+
+
+                </div>
+
+                <div id="but" class="plusbut" onclick="addCompiney()">
+                    <button class="fa-solid fa-circle-plus fa-2xl"></button><span>Add Friend</span>
+                </div>
+                <form id="enterCompiny">
+
+
+
+                    <!-- <input  value="<"  onclick="hideCompiney()"> -->
+                    <div><input type="text" placeholder="Enter Name" id="compinyName" autocomplete="off" required></div>
+                    <div><button class="fa-solid fa-circle-check fa-2xl" type="submit" value="OK"><button
+                                class="fa-solid fa-circle-xmark fa-2xl" type="reset" onclick="hideCompiney()"></button>
+                    </div>
+
+                </form>
             </div>
-            <form id="enterCompiny">
-                <button class="fa-solid fa-circle-chevron-left fa-2xl" type="reset" onclick="hideCompiney()"></button>
-                <!-- <input  value="<"  onclick="hideCompiney()"> -->
-                <input type="text" placeholder="Enter Name" id="compinyName" autocomplete="off" required>
-                <input type="submit" value="OK">
-            </form>
         </div>
         <div id="setelment">
             <div class="hedding">
@@ -54,32 +67,39 @@
 
             </div>
 
-
+            <!-- <div class="setFloat"> -->
             <div id="Entry">
 
             </div>
             <div id="addSetilment">
                 <!-- <button onclick="addEntry()">+</button> -->
-                <button onclick="addEntry('neg')">YOU GIVE ₹</button>
-                <button onclick="addEntry('pos')">YOU GOT ₹</button>
+                <button class="giveB" onclick="addEntry('neg')">YOU GIVE ₹</button>
+                <button class="gotB" onclick="addEntry('pos')">YOU GOT ₹</button>
             </div>
+            <!-- </div> -->
 
-            
+
+
+
+
         </div>
         <div>
-            <form id="entryDet" >
-                <button  class="fa-solid fa-circle-chevron-left fa-2xl" type="reset" value="<"  onclick="removeEntry()"></button>
-                 <!-- <button type="reset" onclick="hideCompiney()"></button> -->
-                 <div><input type="number" placeholder="Amount" id="amount" autocomplete="off" required></div>
-                 <div><input type="text" placeholder="Remark" id="remark" autocomplete="off" ></div>
-                 
- 
-                 <div><input type="datetime-local" id="date" required></div>
-                 <div >
-                     <input type="submit" value="SAVE" id="Save">
-                 </div>
- 
-             </form>
+            <form id="entryDet">
+                
+                <!-- <button type="reset" onclick="hideCompiney()"></button> -->
+                <div><input type="number" placeholder="Amount" id="amount" autocomplete="off" required></div>
+                <div><input type="text" placeholder="Remark" id="remark" autocomplete="off"></div>
+
+
+                <div><input type="datetime-local" id="date" required></div>
+                <div>
+                    <button type="submit" class="fa-solid fa-circle-check fa-2xl" ></button>
+                    <!-- <input type="submit" value="SAVE" id="Save"> -->
+                    <button class="fa-solid fa-circle-xmark fa-2xl" type="reset"
+                    onclick="removeEntry()"></button>
+                </div>
+
+            </form>
         </div>
     </div>
     <script src="./script.js"></script>
