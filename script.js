@@ -85,7 +85,11 @@ function loadHome(){
 function loadEntry(){
     let index=compines.map(x=>x.name).indexOf(current)
         console.log(index)
-        document.getElementById('customer').innerHTML=`<div><button onclick="home()"  class="fa-solid fa-circle-chevron-left fa-2xl" ></button><h2 id='comp'>${current}</h2></div><button  class="fa-solid fa-user-pen fa-2xl" onclick=userEdit(this) ></button>`
+        document.getElementById('customer').innerHTML=`<div><button onclick="home()"  class="fa-solid fa-circle-chevron-left fa-2xl" ></button><h2 id='comp'>${current}</h2></div>
+        <div>
+        <button  class="fa-solid fa-user-pen fa-2xl" onclick=userEdit(this) ></button>
+        <button class="fa-solid fa-trash-can fa-2xl" onclick=remove(this)></button>
+        </div>`
 
         if(compines[index].total>=0){
             document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
@@ -198,7 +202,12 @@ function selectOp(data){
     localStorage.setItem('mode',JSON.stringify(mode))
     current=data.querySelector('h4').innerText
     localStorage.setItem('current',JSON.stringify(current))
-    document.getElementById('customer').innerHTML=`<div><button  class="fa-solid fa-circle-chevron-left fa-2xl"  onclick="home()"></button><h2  id='comp'>${current}</h2></div> <button  class="fa-solid fa-user-pen fa-2xl" onclick=userEdit(this) ></button>`
+    document.getElementById('customer').innerHTML=`<div><button  class="fa-solid fa-circle-chevron-left fa-2xl"  onclick="home()"></button><h2  id='comp'>${current}</h2></div> 
+    <div>
+    <button  class="fa-solid fa-user-pen fa-2xl" onclick=userEdit(this) ></button>
+    <button class="fa-solid fa-trash-can fa-2xl" onclick=remove(this)></button>
+    </div>`
+    
     loadEntry()
     setelmentMode()
     
@@ -236,7 +245,7 @@ function removeEntry(){
 function submitEntry(state){
     // state.preventDefault();
     
-     console.log(state)
+    //  console.log(state)
     let index=compines.map(x=>x.name).indexOf(current)
     let remark=document.getElementById('remark').value
     let amount=parseInt(document.getElementById('amount').value)
@@ -343,7 +352,7 @@ function userEdit(data){
     document.getElementById('regster').classList.add("showRegister")
     document.getElementById('regster').classList.remove("hide")
     document.getElementById('but').classList.add("hide")
-    editElement=data.parentElement.querySelector('h2').innerHTML
+    editElement=data.parentElement.parentElement.querySelector('h2').innerHTML
     document.getElementById('compinyName').value=editElement
     
 }
@@ -371,4 +380,14 @@ function userEditing(){
     document.getElementById('regster').classList.add("hide")
     document.getElementById('but').classList.remove("hide")
     regStatus=1   
+}
+function remove(data){
+    let c=data.parentElement.parentElement.querySelector('h2').innerHTML
+    compines.splice(compines.map(x=>x.name).indexOf(c),1)
+    mode=0
+    regStatus =1
+    localStorage.setItem('allData', JSON.stringify(compines))
+    localStorage.setItem('mode',JSON.stringify(mode))
+    location.reload();
+    
 }

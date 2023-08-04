@@ -1,7 +1,9 @@
 /* #enterCompiny{
     display: none;
 } */
-
+form{
+    display: none;
+}
 #customer{
     display: flex;
     justify-content: space-between;
