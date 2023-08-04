@@ -152,6 +152,7 @@ function addCompiney(){
     document.getElementById('enterCompiny').classList.add("EnterCom")
     document.getElementById('enterCompiny').classList.remove("hide")
     document.getElementById('compines').classList.add('hide')
+    document.getElementById('sum').classList.add('hide')
 }
 function hideCompiney(){
     if(regStatus==1){
@@ -159,6 +160,7 @@ function hideCompiney(){
         document.getElementById('enterCompiny').classList.add("hide")
         document.getElementById('enterCompiny').classList.remove("EnterCom")
         document.getElementById('compines').classList.remove('hide')
+        document.getElementById('sum').classList.remove('hide')
     }
     if(regStatus==0){
         document.getElementById('setelment').classList.remove('hide')

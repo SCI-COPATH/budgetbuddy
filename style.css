@@ -1,6 +1,75 @@
 /* #enterCompiny{
     display: none;
 } */
+body{
+    background-color: #212121;
+    /* font-family: 'Open Sans', sans-serif; */
+    font-family: 'Poppins', sans-serif;
+/* font-family: 'Raleway', sans-serif; */
+}
+h4,h5,p{
+    padding: 0;
+    margin: 0;
+}
+button{
+    border: none;
+    background: none;
+    margin: 15px 0px;
+    color:red;
+}
+button:hover {
+    cursor: pointer;
+} 
+.box{
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 0px 10px;
+    color: #E8F9FD;
+}
+.GIVE{
+    background-color: #59CE8F;
+   
+}
+.GOT{
+    background-color: #FF1E00;
+}
+.listComp{
+    position: relative;
+    background-color: #E8F9FD;
+    padding: 10px 0px;
+    margin: 10px;
+    border-radius: 20px;
+    /* width: 50vw; */
+    min-height:70vh ;
+}
+.plusbut{
+    position: absolute; 
+    /* font-family: 'Open Sans', sans-serif; */
+    /* font-family: 'Poppins', sans-serif; */
+    /* font-family: 'Raleway', sans-serif; */
+    /* z-index: -1; */
+    background-color: #212121;
+    
+}
+.plusbut button{
+    color: #E8F9FD;
+    
+}
+.summary-inner{
+    display: flex;
+    justify-content:space-evenly;
+    /* background-color: #E8F9FD; */
+    padding: 10px 10px; 
+    margin: 10px;
+    border-radius: 40px;
+    width: fit-content;
+    margin: auto;
+}
+.hed img{
+    height: 40px;
+    width: auto;
+   
+}
 form{
     display: none;
 }
@@ -11,14 +80,7 @@ form{
 #customer div{
     display: flex;
 }
-button{
-    border: none;
-    background: none;
-    margin: 15px 0px
-}
-button:hover {
-    cursor: pointer;
-}   
+  
 .feature-button{
     display: flex;
 }
@@ -28,10 +90,7 @@ button:hover {
 .logoImg g{
     fill:white;
 }
-.logoImg path{
-    fill:white;
-    fill-opacity:1;stroke:none;stroke-width:1.90894973;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1
-}
+
 .container{
     margin: auto;
     width: 50vw;
@@ -40,6 +99,20 @@ button:hover {
 .compinyStyle{
     display: flex;
     justify-content: space-between;
+    background-color: #212121;
+    color:#E8F9FD;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 20px;
+}
+.compinyStyle h4{
+    padding: 10px;
+    align-self:center;
+}
+.compinyStyle div{
+    padding-right: 10px;
+    /* font-weight: bold; */
+    font-size:larger;
 }
 .entryForm{
     display: flex;
