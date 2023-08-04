@@ -1,6 +1,14 @@
 /* #enterCompiny{
     display: none;
 } */
+
+#customer{
+    display: flex;
+    justify-content: space-between;
+}
+#customer div{
+    display: flex;
+}
 button{
     border: none;
     background: none;
@@ -35,9 +43,7 @@ button:hover {
     display: flex;
     flex-flow: row;
 }
-#customer{
-    display: flex;
-}
+
 #result{
     display: flex;
     align-items: center;

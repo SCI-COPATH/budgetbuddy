@@ -2,7 +2,7 @@
 let compines=[]
 let current
 let mode=0
-let states=[0,0]
+let regStatus =1
 let addSetilmentStatus
 let editElement
 
@@ -15,7 +15,7 @@ const dateFormatOptions = {
     hour12: true
   };
 window.onload = function() {
-        // localStorage.clear()
+        //  localStorage.clear()
     compines= JSON.parse(localStorage.getItem('allData'))!=null?JSON.parse(localStorage.getItem('allData')):compines;
     current= JSON.parse(localStorage.getItem('current'))!=null?JSON.parse(localStorage.getItem('current')):current;
     mode= JSON.parse(localStorage.getItem('mode'))!=null?JSON.parse(localStorage.getItem('mode')):mode;
@@ -26,7 +26,7 @@ window.onload = function() {
         registerMode()
         removeEntry()
         hideCompiney()
-        
+        regStatus=1
         loadHome()                
         // 
 
@@ -43,7 +43,12 @@ let oruForm=document.getElementById('enterCompiny');
 oruForm.addEventListener("submit",(e) => {
     e.preventDefault()
     // console.log(inputObj.value)
-    register() 
+    if(regStatus==1)
+        register()
+    else{
+        
+        userEditing()
+    } 
 })
 const form = document.getElementById("entryDet");
 
@@ -80,7 +85,7 @@ function loadHome(){
 function loadEntry(){
     let index=compines.map(x=>x.name).indexOf(current)
         console.log(index)
-        document.getElementById('customer').innerHTML=`<button onclick="home()"  class="fa-solid fa-circle-chevron-left fa-2xl" ></button><h2>${current}</h2>`
+        document.getElementById('customer').innerHTML=`<div><button onclick="home()"  class="fa-solid fa-circle-chevron-left fa-2xl" ></button><h2 id='comp'>${current}</h2></div><button  class="fa-solid fa-user-pen fa-2xl" onclick=userEdit(this) ></button>`
 
         if(compines[index].total>=0){
             document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
@@ -138,16 +143,29 @@ function setelmentMode(){
     // document.getElementById('setelment').style.display = "flex";
 }
 function addCompiney(){
+    regStatus=1
     document.getElementById('but').classList.add('hide')
     document.getElementById('enterCompiny').classList.add("EnterCom")
     document.getElementById('enterCompiny').classList.remove("hide")
     document.getElementById('compines').classList.add('hide')
 }
 function hideCompiney(){
-    document.getElementById('but').classList.remove('hide')
-    document.getElementById('enterCompiny').classList.add("hide")
-    document.getElementById('enterCompiny').classList.remove("EnterCom")
-    document.getElementById('compines').classList.remove('hide')
+    if(regStatus==1){
+        document.getElementById('but').classList.remove('hide')
+        document.getElementById('enterCompiny').classList.add("hide")
+        document.getElementById('enterCompiny').classList.remove("EnterCom")
+        document.getElementById('compines').classList.remove('hide')
+    }
+    if(regStatus==0){
+        document.getElementById('setelment').classList.remove('hide')
+        document.getElementById('compines').classList.remove('hide')
+        document.getElementById('enterCompiny').classList.remove("EnterCom")
+        document.getElementById('enterCompiny').classList.add("hide")
+        document.getElementById('regster').classList.remove("showRegister")
+        document.getElementById('regster').classList.add("hide")
+        document.getElementById('but').classList.remove("hide")
+        regStatus=1   
+    }
 }
 function register(){
     let name =document.getElementById('compinyName').value
@@ -180,7 +198,7 @@ function selectOp(data){
     localStorage.setItem('mode',JSON.stringify(mode))
     current=data.querySelector('h4').innerText
     localStorage.setItem('current',JSON.stringify(current))
-    document.getElementById('customer').innerHTML=`<button  class="fa-solid fa-circle-chevron-left fa-2xl"  onclick="home()"></button><h2>${current}</h2>`
+    document.getElementById('customer').innerHTML=`<div><button  class="fa-solid fa-circle-chevron-left fa-2xl"  onclick="home()"></button><h2  id='comp'>${current}</h2></div> <button  class="fa-solid fa-user-pen fa-2xl" onclick=userEdit(this) ></button>`
     loadEntry()
     setelmentMode()
     
@@ -315,4 +333,42 @@ function edit(data){
     editElement=compines.filter(x=>x.name==current)[0].entry.filter(x=>x.id==id)[0]
     addEntry('edit')
     
+}
+function userEdit(data){
+    regStatus=0
+    document.getElementById('setelment').classList.add('hide')
+    document.getElementById('compines').classList.add('hide')
+    document.getElementById('enterCompiny').classList.add("EnterCom")
+    document.getElementById('enterCompiny').classList.remove("hide")
+    document.getElementById('regster').classList.add("showRegister")
+    document.getElementById('regster').classList.remove("hide")
+    document.getElementById('but').classList.add("hide")
+    editElement=data.parentElement.querySelector('h2').innerHTML
+    document.getElementById('compinyName').value=editElement
+    
+}
+function userEditing(){
+    let i=compines.map(x=>x.name).indexOf(editElement)
+    // console.log(compines.map(x=>x.name).indexOf(document.getElementById('compinyName').value))
+    
+    if(compines.map(x=>x.name).indexOf(document.getElementById('compinyName').value)<=-1){
+        current=document.getElementById('compinyName').value
+        document.getElementById('comp').innerHTML=current
+        compines[i].name=current
+        localStorage.setItem('allData', JSON.stringify(compines))
+        localStorage.setItem('current',JSON.stringify(current))
+    }else{
+        alert(`${document.getElementById('compinyName').value} Alredy Exist`)
+    }
+    
+    
+    
+    document.getElementById('setelment').classList.remove('hide')
+    document.getElementById('compines').classList.remove('hide')
+    document.getElementById('enterCompiny').classList.remove("EnterCom")
+    document.getElementById('enterCompiny').classList.add("hide")
+    document.getElementById('regster').classList.remove("showRegister")
+    document.getElementById('regster').classList.add("hide")
+    document.getElementById('but').classList.remove("hide")
+    regStatus=1   
 }
