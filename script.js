@@ -5,7 +5,7 @@ let mode=0
 let regStatus =1
 let addSetilmentStatus
 let editElement
-
+let referance
 const dateFormatOptions = {
     day: '2-digit',
     month: '2-digit',
@@ -15,7 +15,7 @@ const dateFormatOptions = {
     hour12: true
   };
 window.onload = function() {
-    //  localStorage.clear()
+//   localStorage.clear()
     compines= JSON.parse(localStorage.getItem('allData'))!=null?JSON.parse(localStorage.getItem('allData')):compines;
     current= JSON.parse(localStorage.getItem('current'))!=null?JSON.parse(localStorage.getItem('current')):current;
     mode= JSON.parse(localStorage.getItem('mode'))!=null?JSON.parse(localStorage.getItem('mode')):mode;
@@ -57,7 +57,7 @@ const form = document.getElementById("entryDet");
 // Event listener for form submission
 form.addEventListener("submit", event=> {
     event.preventDefault(); // Prevent form submission
-    console.log(1)
+    // console.log(1)
     submitEntry(addSetilmentStatus)
     
     
@@ -101,7 +101,7 @@ function loadHome(){
 }
 function loadEntry(){
     let index=compines.map(x=>x.name).indexOf(current)
-        console.log(index)
+        // console.log(index)
         document.getElementById('customer').innerHTML=`<div><button onclick="home()"  class="fa-solid fa-circle-chevron-left fa-2xl" ></button><h2 id='comp'>${current}</h2></div>
         <div>
         <button  class="fa-solid fa-user-pen fa-2xl" onclick=userEdit(this) ></button>
@@ -269,7 +269,8 @@ function addEntry(x){
         let formattedDate = adjustedDate.toISOString().slice(0, 16);
     
         // Set the value of the input directly using the formatted date
-        document.getElementById('date').value = formattedDate;
+        document.getElementById('date').value = formattedDate;  
+        document.getElementById('specialRemove').classList.remove('hide')
         
     }
 }
@@ -282,6 +283,7 @@ function submitEntry(state){
     // state.preventDefault();
     
     //  console.log(state)
+    
     let index=compines.map(x=>x.name).indexOf(current)
     let remark=document.getElementById('remark').value
     let amount=parseInt(document.getElementById('amount').value)
@@ -295,7 +297,7 @@ function submitEntry(state){
     if(state=='edit'){
    
         // console.log('edit')
-        console.log(editElement)
+        // console.log(editElement)
         let cash=editElement.amount
         let index=compines.map(x=>x.name).indexOf(current)
         let entryIndex=compines[index].entry.map(x=>x.id).indexOf(editElement.id)
@@ -304,24 +306,27 @@ function submitEntry(state){
         
         // console.log(compines)
         compines[index].total=parseInt(compines[index].total)-parseInt(cash)+parseInt(amount)
-        console.log(parseInt(compines[index].total))
-        console.log(parseInt(cash))
-        console.log(parseInt(amount))
+        // console.log(parseInt(compines[index].total))
+        // console.log(parseInt(cash))
+        // console.log(parseInt(amount))
         // console.log(parseInt(compines[index].total)-parseInt(editElement.total)+parseInt(amount))
      
     }
     else{
-
-        // console.log('2')
+       
+        let localId=compines[index].entry.length==0?0:compines[index].entry[compines[index].entry.length-1].id+1
+        // let localId=compines[index].entry[compines[index].entry.length]!=null?compines[index].entry[compines[index].entry.length]+1:0
+       
+       
         if(state=='neg')
             amount=amount*-1
-        compines[index].entry.push({'remark':remark,'amount':amount ,'date':date ,'id':compines[index].entry.length})
+        compines[index].entry.push({'remark':remark,'amount':amount ,'date':date ,'id':localId})
         compines[index].total+=amount
         
         let message
         if(amount>0){
             message =`<div class='element_feature'>
-                    <span class='hide'>${compines[index].entry.length-1}</span>
+                    <span class='hide'>${localId}</span>
                     <div>
                         <div class="dateTime">${formattedDate}</div>
                         <div class="label">${remark}</div>
@@ -333,7 +338,7 @@ function submitEntry(state){
                     </div>`
         }else if(amount<0){
             message =`<div class='element_feature '>
-                      <span class='hide'>${compines[index].entry.length-1}</span>
+                      <span class='hide'>${localId}</span>
                         <div>
                             <div class="dateTime">${formattedDate}</div>
                             <div class="label">${remark}</div>
@@ -357,9 +362,9 @@ function submitEntry(state){
             </div>`
         }
         document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
-        if(compines[index].total>=0){
+        if(compines[index].total>0){
             document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
-        }else if(compines[index].total<=0){
+        }else if(compines[index].total<0){
             document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[index].total}</h2>`
         }else{
             document.getElementById('result').innerHTML=`<h2>Settled Up <i class="fa-solid fa-square-check" style="color: #59CE8F;"></i></i></h2>`
@@ -388,10 +393,13 @@ function home(){
     
 }
 function edit(data){
+    document.getElementById('specialRemove').classList.remove('hide')
+    referance=data
     let id=data.parentElement.parentElement.querySelector('span').innerHTML
     editElement=compines.filter(x=>x.name==current)[0].entry.filter(x=>x.id==id)[0]
     addEntry('edit')
     
+      
 }
 function userEdit(data){
     regStatus=0
@@ -443,4 +451,23 @@ function remove(data){
     localStorage.setItem('mode',JSON.stringify(mode))
     location.reload();
     
+}
+function removeElement(){
+    let i=compines.map(x=>x.name).indexOf(current)
+    let j=compines[i].entry.map(x=>x.id).indexOf(editElement.id)
+    compines[i].total-=compines[i].entry[j].amount
+    compines[i].entry.splice(j,1)
+    //  console.log(compines[i])
+    // console.log(.removeChild(referance.parentElement.parentElement))
+    if(compines[i].total>0){
+        document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[i].total}</h2>`
+    }else if(compines[i].total<0){
+        document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[i].total}</h2>`
+    }else{
+        document.getElementById('result').innerHTML=`<h2>Settled Up <i class="fa-solid fa-square-check" style="color: #59CE8F;"></i></i></h2>`
+    }
+    referance.parentElement.parentElement.parentElement.removeChild(referance.parentElement.parentElement)
+    localStorage.setItem('allData', JSON.stringify(compines))
+    document.getElementById('specialRemove').classList.add('hide')
+    removeEntry()
 }
