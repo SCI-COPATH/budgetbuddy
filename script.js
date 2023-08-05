@@ -68,22 +68,35 @@ form.addEventListener("submit", event=> {
 function loadHome(){
     let data=document.getElementById('compines')
     let message
+    let postive=0,negative=0
     data.innerHTML=''
+    // document.getElementById('summery_give').innerHTML=100
+    // console.log()
+   
     compines.forEach(element => {
-        if(element.total>=0){
+        if(element.total>0){
+            postive+=element.total
              message=`<div class="compinyStyle" onClick=selectOp(this)>
                     <h4>${element.name}<h4>
                     <div class='moneyGet'>${element.total}</div>
                     </div>`
-        }else{
+        }else if(element.total<0){
+            negative=negative+element.total
             message=`<div class="compinyStyle" onClick=selectOp(this)>
             <h4>${element.name}<h4>
             <div class='moneyGot'>${-1*element.total}</div>
             </div>`
+        }else{
+            message=`<div class="compinyStyle" onClick=selectOp(this)>
+                    <h4>${element.name}<h4>
+                    <div >${element.total}</div>
+                    </div>`
         }
         data.insertAdjacentHTML("afterbegin",message)
         
     });
+    document.getElementById('summery_give').innerHTML=postive
+    document.getElementById('summery_got').innerHTML=-1*negative
     data.insertAdjacentHTML("beforeend",`<div class='dummy'></div>`)
 }
 function loadEntry(){
@@ -95,16 +108,18 @@ function loadEntry(){
         <button class="fa-solid fa-trash-can fa-2xl" onclick=remove(this)></button>
         </div>`
 
-        if(compines[index].total>=0){
+        if(compines[index].total>0){
             document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
-        }else{
+        }else if(compines[index].total<0){
             document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[index].total}</h2>`
+        }else{
+            document.getElementById('result').innerHTML=`<h2>Settled Up <i class="fa-solid fa-square-check" style="color: #59CE8F;"></i></i></h2>`
         }
         let message
         document.getElementById('Entry').innerHTML=''
         compines[index].entry.forEach(element => {
             const formattedDate = new Date(element.date).toLocaleString('en-US', dateFormatOptions);
-            if(element.amount>=0){
+            if(element.amount>0){
                 message =`<div class='element_feature'>
                             <span class='hide'>${element.id}</span>
                             <div>
@@ -116,7 +131,7 @@ function loadEntry(){
                                 <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                              </div>
                          </div>`
-            }else{
+            }else if(element.amount<0){
                 message =`<div class='element_feature '>
                             <span class='hide'>${element.id}</span>
                             <div>
@@ -127,6 +142,18 @@ function loadEntry(){
                             <div class="amount moneyGot">${-1*element.amount}</div>
                             <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                             </div>
+                         </div>`
+            }else{
+                message =`<div class='element_feature'>
+                            <span class='hide'>${element.id}</span>
+                            <div>
+                                <div class="dateTime">${formattedDate}</div>
+                                <div class="label">${element.remark}</div>
+                            </div>
+                            <div class='feature-button'>
+                                <div class="amount">${element.amount}</div>
+                                <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
+                             </div>
                          </div>`
             }
             document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
@@ -292,7 +319,7 @@ function submitEntry(state){
         compines[index].total+=amount
         
         let message
-        if(amount>=0){
+        if(amount>0){
             message =`<div class='element_feature'>
                     <span class='hide'>${compines[index].entry.length-1}</span>
                     <div>
@@ -304,7 +331,7 @@ function submitEntry(state){
                         <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                     </div>
                     </div>`
-        }else{
+        }else if(amount<0){
             message =`<div class='element_feature '>
                       <span class='hide'>${compines[index].entry.length-1}</span>
                         <div>
@@ -316,12 +343,26 @@ function submitEntry(state){
                         <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                         </div>
                     </div>`
+        }else{
+            message =`<div class='element_feature'>
+            <span class='hide'>${compines[index].entry.length-1}</span>
+            <div>
+                <div class="dateTime">${formattedDate}</div>
+                <div class="label">${remark}</div>
+            </div>
+            <div class='feature-button'>
+                <div class="amount">${amount}</div>
+                <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
+            </div>
+            </div>`
         }
         document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
         if(compines[index].total>=0){
             document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
-        }else{
+        }else if(compines[index].total<=0){
             document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[index].total}</h2>`
+        }else{
+            document.getElementById('result').innerHTML=`<h2>Settled Up <i class="fa-solid fa-square-check" style="color: #59CE8F;"></i></i></h2>`
         }
         removeEntry()
     }
@@ -362,7 +403,9 @@ function userEdit(data){
     document.getElementById('regster').classList.remove("hide")
     document.getElementById('but').classList.add("hide")
     editElement=data.parentElement.parentElement.querySelector('h2').innerHTML
+    document.getElementById('sum').classList.add('hide')
     document.getElementById('compinyName').value=editElement
+    
     
 }
 function userEditing(){
@@ -388,6 +431,7 @@ function userEditing(){
     document.getElementById('regster').classList.remove("showRegister")
     document.getElementById('regster').classList.add("hide")
     document.getElementById('but').classList.remove("hide")
+    document.getElementById('sum').classList.remove('hide')
     regStatus=1   
 }
 function remove(data){

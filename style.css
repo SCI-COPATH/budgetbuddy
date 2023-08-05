@@ -23,7 +23,7 @@
 #Entry{
     /* width: 40vw; */
     margin: auto;
-    height: 65vh;
+    height: 60vh;
     border-radius: 10px;
     margin: 10px;
     overflow-y: auto;
@@ -121,6 +121,10 @@ button:hover {
     margin: 0px 10px;
     color: #E8F9FD;
 }
+.box p{
+    font-weight: bold;
+    text-align: center;
+}
 .GIVE{
     background-color: #59CE8F;
    
@@ -132,7 +136,7 @@ button:hover {
     
     
     /* width: 50vw; */
-    height:76vh ;
+    height:70vh ;
     overflow-y: auto;
     
 }
