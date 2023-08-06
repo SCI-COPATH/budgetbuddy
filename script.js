@@ -472,5 +472,7 @@ function removeElement(){
     removeEntry()
 }
 function findUniqu(list){
-    return Math.max(list)+1
+    console.log(list)
+    console.log(Math.max(...list)+1)
+    return Math.max(...list)+1
 }
