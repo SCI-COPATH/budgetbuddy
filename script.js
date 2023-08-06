@@ -314,9 +314,11 @@ function submitEntry(state){
     }
     else{
        
-        let localId=compines[index].entry.length==0?0:compines[index].entry[compines[index].entry.length-1].id+1
+        // let localId=compines[index].entry.length==0?0:compines[index].entry[compines[index].entry.length-1].id+1
         // let localId=compines[index].entry[compines[index].entry.length]!=null?compines[index].entry[compines[index].entry.length]+1:0
-       
+      
+       let localId=compines[index].entry.length==0?0:findUniqu(compines[index].entry.map(x=>x.id))
+       console.log(compines[index].entry.map(x=>x.id))
        
         if(state=='neg')
             amount=amount*-1
@@ -425,13 +427,11 @@ function userEditing(){
         document.getElementById('comp').innerHTML=current
         compines[i].name=current
         localStorage.setItem('allData', JSON.stringify(compines))
-        localStorage.setItem('current',JSON.stringify(current))
+        localStorage.setItem('current',JSON.stringify(current)) 
     }else{
         alert(`${document.getElementById('compinyName').value} Alredy Exist`)
-    }
-    
-    
-    
+    }  
+    document.getElementById('compinyName').value=''
     document.getElementById('setelment').classList.remove('hide')
     document.getElementById('compines').classList.remove('hide')
     document.getElementById('enterCompiny').classList.remove("EnterCom")
@@ -470,4 +470,7 @@ function removeElement(){
     localStorage.setItem('allData', JSON.stringify(compines))
     document.getElementById('specialRemove').classList.add('hide')
     removeEntry()
+}
+function findUniqu(list){
+    return Math.max(list)+1
 }
