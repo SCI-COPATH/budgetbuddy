@@ -232,7 +232,7 @@ function register(){
             localStorage.setItem('mode',JSON.stringify(mode))
             localStorage.setItem('current',JSON.stringify(current))
         }else{
-            alert('${name} Alredy Exist')
+            alert(`${name} Alredy Exist`)
         }
         
     // }
