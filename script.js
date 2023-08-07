@@ -32,6 +32,7 @@ window.onload = function() {
         // 
 
     }else{
+        regStatus=0
         removeEntry()
         loadEntry()
         hideCompiney()
@@ -100,6 +101,7 @@ function loadHome(){
     data.insertAdjacentHTML("beforeend",`<div class='dummy'></div>`)
 }
 function loadEntry(){
+    // console.log(current)
     let index=compines.map(x=>x.name).indexOf(current)
         // console.log(index)
         document.getElementById('customer').innerHTML=`<div><button onclick="home()"  class="fa-solid fa-circle-chevron-left fa-2xl" ></button><h2 id='comp'>${current}</h2></div>
@@ -208,10 +210,11 @@ function hideCompiney(){
     }
 }
 function register(){
-    let name =document.getElementById('compinyName').value
-
-    if(name){
-        if(compines.map(x=>x.name)!=name){
+    let name =document.getElementById('compinyName').value.trim()
+    
+    // if(name){
+        
+        if(compines.map(x=>x.name).indexOf(name)==-1){
             
             compines.push({'name':name,'entry':[],'total':0})
             // console.log()
@@ -228,9 +231,11 @@ function register(){
             localStorage.setItem('allData', JSON.stringify(compines))
             localStorage.setItem('mode',JSON.stringify(mode))
             localStorage.setItem('current',JSON.stringify(current))
+        }else{
+            alert('${name} Alredy Exist')
         }
         
-    }
+    // }
 }
 function selectOp(data){
     
@@ -243,7 +248,8 @@ function selectOp(data){
     <button  class="fa-solid fa-user-pen fa-2xl" onclick=userEdit(this) ></button>
     <button class="fa-solid fa-trash-can fa-2xl" onclick=remove(this)></button>
     </div>`
-    
+    // console.log(current)
+    // console.log(mode)
     loadEntry()
     setelmentMode()
     
@@ -422,7 +428,7 @@ function userEditing(){
     let i=compines.map(x=>x.name).indexOf(editElement)
     // console.log(compines.map(x=>x.name).indexOf(document.getElementById('compinyName').value))
     
-    if(compines.map(x=>x.name).indexOf(document.getElementById('compinyName').value)<=-1){
+    if(compines.map(x=>x.name).indexOf(document.getElementById('compinyName').value.trim())<=-1){
         current=document.getElementById('compinyName').value
         document.getElementById('comp').innerHTML=current
         compines[i].name=current
