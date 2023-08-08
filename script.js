@@ -118,7 +118,7 @@ function loadEntry(){
         let message
         document.getElementById('Entry').innerHTML=''
         compines[index].entry.forEach(element => {
-            const formattedDate = new Date(element.date).toLocaleString('en-US', dateFormatOptions);
+            const formattedDate = new Date(element.date).toLocaleString('en-IN', dateFormatOptions);
             if(element.amount>0){
                 message =`<div class='element_feature'>
                             <span class='hide'>${element.id}</span>
@@ -279,12 +279,36 @@ function removeEntry(){
     document.getElementById('entryDet').classList.add('hide')
     document.getElementById('setelment').classList.remove('hide')
 }
+function entrySort(ind){
+    console.log(compines[ind])
+    let i ,j
+    for(i=0;i<compines[ind].entry.length-1;i++){
+        for( j=0;j<compines[ind].entry.length-i-1;j++){
+            let date1=new Date(compines[ind].entry[j].date)
+            let date2=new Date(compines[ind].entry[j+1].date)
+            console.log(`${compines[ind].entry[j].date}<${compines[ind].entry[j+1].date}`)
+            if(date1.getTime()>date2.getTime()){
+                let temp=compines[ind].entry[j]
+                compines[ind].entry[j]=compines[ind].entry[j+1]
+                compines[ind].entry[j+1]=temp
+            }
+        }
+    }
+    console.log(compines[ind])
+}
+
 function submitEntry(state){
     // state.preventDefault();
     
     //  console.log(state)
-    
+    // compines[current].entry.date.sort(((date1,date2)=>date1-date2))
+    // console.log(compines[current])
     let index=compines.map(x=>x.name).indexOf(current)
+    
+    // compines[index].entry.date.sort(((date1,date2)=>date1-date2))
+    // console.log(compines[index].entry)
+   
+
     let remark=document.getElementById('remark').value
     let amount=parseInt(document.getElementById('amount').value)
     let readdate=document.getElementById('date').value
@@ -301,11 +325,13 @@ function submitEntry(state){
         let cash=editElement.amount
         let index=compines.map(x=>x.name).indexOf(current)
         let entryIndex=compines[index].entry.map(x=>x.id).indexOf(editElement.id)
+        
         compines[index].entry[entryIndex].amount=parseInt(amount)
         compines[index].entry[entryIndex].remark=remark
-        
+        compines[index].entry[entryIndex].date=date
         // console.log(compines)
         compines[index].total=parseInt(compines[index].total)-parseInt(cash)+parseInt(amount)
+        entrySort(index)
         // console.log(parseInt(compines[index].total))
         // console.log(parseInt(cash))
         // console.log(parseInt(amount))
@@ -319,51 +345,64 @@ function submitEntry(state){
       
        let localId=compines[index].entry.length==0?0:findUniqu(compines[index].entry.map(x=>x.id))
        console.log(compines[index].entry.map(x=>x.id))
+      
        
         if(state=='neg')
             amount=amount*-1
-        compines[index].entry.push({'remark':remark,'amount':amount ,'date':date ,'id':localId})
         compines[index].total+=amount
-        
-        let message
-        if(amount>0){
-            message =`<div class='element_feature'>
-                    <span class='hide'>${localId}</span>
-                    <div>
-                        <div class="dateTime">${formattedDate}</div>
-                        <div class="label">${remark}</div>
-                    </div>
-                    <div class='feature-button'>
-                        <div class="amount moneyGet">${amount}</div>
-                        <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
-                    </div>
-                    </div>`
-        }else if(amount<0){
-            message =`<div class='element_feature '>
-                      <span class='hide'>${localId}</span>
-                        <div>
-                            <div class="dateTime">${formattedDate}</div>
-                            <div class="label">${remark}</div>
-                        </div>
-                        <div class='feature-button'>
-                        <div class="amount moneyGot">${-1*amount}</div>
-                        <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
-                        </div>
-                    </div>`
-        }else{
-            message =`<div class='element_feature'>
-            <span class='hide'>${compines[index].entry.length-1}</span>
-            <div>
-                <div class="dateTime">${formattedDate}</div>
-                <div class="label">${remark}</div>
-            </div>
-            <div class='feature-button'>
-                <div class="amount">${amount}</div>
-                <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
-            </div>
-            </div>`
+        let insertIndex = compines[index].entry.findIndex(element => new Date(element.date).getTime() > new Date(date).getTime());
+
+        if (insertIndex === -1) {
+            compines[index].entry.push({'remark':remark,'amount':amount ,'date':date ,'id':localId})
+        } else {
+            compines[index].entry.splice(insertIndex, 0, {'remark':remark,'amount':amount ,'date':date ,'id':localId});
         }
-        document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
+        console.log(compines)
+        let message
+        document.getElementById('Entry').innerHTML=''
+        compines[index].entry.forEach(element => {
+            const formattedDate = new Date(element.date).toLocaleString('en-IN', dateFormatOptions)
+            if(element.amount>0){
+                message =`<div class='element_feature'>
+                            <span class='hide'>${element.id}</span>
+                            <div>
+                                <div class="dateTime">${formattedDate}</div>
+                                <div class="label">${element.remark}</div>
+                            </div>
+                            <div class='feature-button'>
+                                <div class="amount moneyGet">${element.amount}</div>
+                                <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
+                             </div>
+                         </div>`
+            }else if(element.amount<0){
+                message =`<div class='element_feature '>
+                            <span class='hide'>${element.id}</span>
+                            <div>
+                                <div class="dateTime">${formattedDate}</div>
+                                <div class="label">${element.remark}</div>
+                            </div>
+                            <div class='feature-button'>
+                            <div class="amount moneyGot">${-1*element.amount}</div>
+                            <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
+                            </div>
+                         </div>`
+            }else{
+                message =`<div class='element_feature'>
+                            <span class='hide'>${element.id}</span>
+                            <div>
+                                <div class="dateTime">${formattedDate}</div>
+                                <div class="label">${element.remark}</div>
+                            </div>
+                            <div class='feature-button'>
+                                <div class="amount">${element.amount}</div>
+                                <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
+                             </div>
+                         </div>`
+            }
+            document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
+        });
+        document.getElementById('Entry').insertAdjacentHTML("beforeend",`<div class='dummy'></div>`)
+        
         if(compines[index].total>0){
             document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
         }else if(compines[index].total<0){
