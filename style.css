@@ -81,6 +81,14 @@
     border-radius: 10px;
     font-weight: bolder;
 }
+.rssymbol{
+    /* font-family: 'Open Sans', sans-serif; */ 
+    /* font-family: 'Poppins', sans-serif; */
+    font-family: 'Raleway', sans-serif;
+    padding: 0px 3px;
+    
+
+}
 .gotB{
     background-color: #59CE8F;
 }
@@ -179,6 +187,9 @@ button:hover {
 .plusbut button{
     color: #E8F9FD;
     
+}
+.commenBox{
+    width: 70px;
 }
 .summary-inner{
     display: flex;
