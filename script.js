@@ -79,25 +79,25 @@ function loadHome(){
             postive+=element.total
              message=`<div class="compinyStyle" onClick=selectOp(this)>
                     <h4>${element.name}<h4>
-                    <div class='moneyGet'>${element.total}</div>
+                    <div class='moneyGet'><span class="rssymbol">₹</span>${element.total}</div>
                     </div>`
         }else if(element.total<0){
             negative=negative+element.total
             message=`<div class="compinyStyle" onClick=selectOp(this)>
             <h4>${element.name}<h4>
-            <div class='moneyGot'>${-1*element.total}</div>
+            <div class='moneyGot'><span class="rssymbol">₹</span>${-1*element.total}</div>
             </div>`
         }else{
             message=`<div class="compinyStyle" onClick=selectOp(this)>
                     <h4>${element.name}<h4>
-                    <div >${element.total}</div>
+                    <div ><span class="rssymbol">₹</span>${element.total}</div>
                     </div>`
         }
         data.insertAdjacentHTML("afterbegin",message)
         
     });
-    document.getElementById('summery_give').innerHTML=postive
-    document.getElementById('summery_got').innerHTML=-1*negative
+    document.getElementById('summery_give').innerHTML=`<span class="rssymbol">₹</span>${postive}`
+    document.getElementById('summery_got').innerHTML=`<span class="rssymbol">₹</span>${-1*negative}`
     data.insertAdjacentHTML("beforeend",`<div class='dummy'></div>`)
 }
 function loadEntry(){
@@ -111,9 +111,9 @@ function loadEntry(){
         </div>`
 
         if(compines[index].total>0){
-            document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
+            document.getElementById('result').innerHTML=`<h2>Totel Credit</h2> <h2 class="moneyGet"><span class="rssymbol">₹</span>${compines[index].total}</h2>`
         }else if(compines[index].total<0){
-            document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[index].total}</h2>`
+            document.getElementById('result').innerHTML=`<h2>Totel Debit</h2> <h2 class="moneyGot"><span class="rssymbol">₹</span>${-1*compines[index].total}</h2>`
         }else{
             document.getElementById('result').innerHTML=`<h2>Settled Up <i class="fa-solid fa-square-check" style="color: #59CE8F;"></i></i></h2>`
         }
@@ -129,7 +129,7 @@ function loadEntry(){
                                 <div class="label">${element.remark}</div>
                             </div>
                             <div class='feature-button'>
-                                <div class="amount moneyGet">${element.amount}</div>
+                                <div class="amount moneyGet"><span class="rssymbol">₹</span>${element.amount}</div>
                                 <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                              </div>
                          </div>`
@@ -141,7 +141,7 @@ function loadEntry(){
                                 <div class="label">${element.remark}</div>
                             </div>
                             <div class='feature-button'>
-                            <div class="amount moneyGot">${-1*element.amount}</div>
+                            <div class="amount moneyGot"><span class="rssymbol">₹</span>${-1*element.amount}</div>
                             <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                             </div>
                          </div>`
@@ -153,7 +153,7 @@ function loadEntry(){
                                 <div class="label">${element.remark}</div>
                             </div>
                             <div class='feature-button'>
-                                <div class="amount">${element.amount}</div>
+                                <div class="amount"><span class="rssymbol">₹</span>${element.amount}</div>
                                 <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                              </div>
                          </div>`
@@ -216,13 +216,16 @@ function register(){
         
         if(compines.map(x=>x.name).indexOf(name)==-1){
             
+            // let prority=compines.map(x=>x.priority).length==0?0:Math.max(...compines.map(x=>x.priority))+1
+            // compines.push({'name':name,'entry':[],'total':0, 'priority':prority})
             compines.push({'name':name,'entry':[],'total':0})
-            // console.log()
+            // console.log(prority)
+            
 
             let data=document.getElementById('compines')
             let message=`<div class="compinyStyle" onClick=selectOp(this)>
                             <h4>${name}<h4>
-                            <div>${compines.filter(x=>x.name==name).map(x=>x.total)}</div>
+                            <div><span class="rssymbol">₹</span>${compines.filter(x=>x.name==name).map(x=>x.total)}</div>
                          </div>`
                           
             data.insertAdjacentHTML("afterbegin",message)
@@ -376,7 +379,7 @@ function submitEntry(state){
                                 <div class="label">${element.remark}</div>
                             </div>
                             <div class='feature-button'>
-                                <div class="amount moneyGet">${element.amount}</div>
+                                <div class="amount moneyGet"><span class="rssymbol">₹</span>${element.amount}</div>
                                 <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                              </div>
                          </div>`
@@ -388,7 +391,7 @@ function submitEntry(state){
                                 <div class="label">${element.remark}</div>
                             </div>
                             <div class='feature-button'>
-                            <div class="amount moneyGot">${-1*element.amount}</div>
+                            <div class="amount moneyGot"><span class="rssymbol">₹</span>${-1*element.amount}</div>
                             <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                             </div>
                          </div>`
@@ -400,7 +403,7 @@ function submitEntry(state){
                                 <div class="label">${element.remark}</div>
                             </div>
                             <div class='feature-button'>
-                                <div class="amount">${element.amount}</div>
+                                <div class="amount"><span class="rssymbol">₹</span>${element.amount}</div>
                                 <button class="fas fa-edit fa-2xl" onclick="edit(this)"></button>
                              </div>
                          </div>`
@@ -408,25 +411,29 @@ function submitEntry(state){
             document.getElementById('Entry').insertAdjacentHTML("afterbegin",message)
         });
         document.getElementById('Entry').insertAdjacentHTML("beforeend",`<div class='dummy'></div>`)
-        
+        // 
         if(compines[index].total>0){
-            document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[index].total}</h2>`
+            document.getElementById('result').innerHTML=`<h2>Totel Credit</h2> <h2 class="moneyGet"><span class="rssymbol">₹</span>${compines[index].total}</h2>`
         }else if(compines[index].total<0){
-            document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[index].total}</h2>`
+            document.getElementById('result').innerHTML=`<h2>Totel Debit</h2> <h2 class="moneyGot"><span class="rssymbol">₹</span>${-1*compines[index].total}</h2>`
         }else{
             document.getElementById('result').innerHTML=`<h2>Settled Up <i class="fa-solid fa-square-check" style="color: #59CE8F;"></i></i></h2>`
         }
         removeEntry()
     }
-    
+    prioritySort(index)
     localStorage.setItem('allData', JSON.stringify(compines))
     localStorage.setItem('mode',JSON.stringify(mode))
     localStorage.setItem('current',JSON.stringify(current))
     document.getElementById('remark').value=''
     document.getElementById('amount').value=''
      if(state=='edit'){
-           
-         location.reload()
+        removeEntry()
+        loadEntry()
+        hideCompiney()
+        setelmentMode()
+        document.getElementById('setelment').classList.remove('hide')
+        //  location.reload()
     }
 
 }
@@ -471,8 +478,10 @@ function userEditing(){
         current=document.getElementById('compinyName').value
         document.getElementById('comp').innerHTML=current
         compines[i].name=current
+        prioritySort(i)
         localStorage.setItem('allData', JSON.stringify(compines))
         localStorage.setItem('current',JSON.stringify(current)) 
+
     }else{
         alert(`${document.getElementById('compinyName').value} Alredy Exist`)
     }  
@@ -505,9 +514,9 @@ function removeElement(){
     //  console.log(compines[i])
     // console.log(.removeChild(referance.parentElement.parentElement))
     if(compines[i].total>0){
-        document.getElementById('result').innerHTML=`<h2>You will get</h2> <h2 class="moneyGet">${compines[i].total}</h2>`
+        document.getElementById('result').innerHTML=`<h2>Totel Credit</h2> <h2 class="moneyGet"><span class="rssymbol">₹</span>${compines[i].total}</h2>`
     }else if(compines[i].total<0){
-        document.getElementById('result').innerHTML=`<h2>You will got</h2> <h2 class="moneyGot">${-1*compines[i].total}</h2>`
+        document.getElementById('result').innerHTML=`<h2>Totel Debit</h2> <h2 class="moneyGot"><span class="rssymbol">₹</span>${-1*compines[i].total}</h2>`
     }else{
         document.getElementById('result').innerHTML=`<h2>Settled Up <i class="fa-solid fa-square-check" style="color: #59CE8F;"></i></i></h2>`
     }
@@ -520,4 +529,17 @@ function findUniqu(list){
     console.log(list)
     console.log(Math.max(...list)+1)
     return Math.max(...list)+1
+}
+function prioritySort(index){
+   
+    let temp=compines[index]
+    for(let i=index;i<compines.length-1;i++){
+        // compines[i]=compines[i-1]
+        compines[i]=compines[i+1]
+        // console.log(compines[i].name)
+    }
+    compines[compines.length-1]=temp
+    // console.log('after')
+    // console.log(compines)
+
 }
